@@ -1,0 +1,5 @@
+#hermes bindings
+hermes-python>=0.1
+
+#python-scriptures
+python-scriptures

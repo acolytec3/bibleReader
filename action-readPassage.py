@@ -50,6 +50,13 @@ def readPassage(reference):
 		return('This is not a valid reference')
 
 def readPassage_callback(hermes, intentMessage):
+	book = intentMessage.slots.book[0].slot_value.value.value
+	chapter = intentMessage.slots.chapter[0].slot_value.value.value
+	verse = intentMessage.slots.verse[0].slot_value.value.value
+	reference = book + ' ' + str(int(chapter))
+	if type(verse)==float:
+		reference+=":" + str(int(verse))
+	print(reference)
 	message = readPassage(reference)
 	hermes.publish_end_session(intentMessage.session_id, message)
 
