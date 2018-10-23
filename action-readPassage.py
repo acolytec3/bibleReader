@@ -42,6 +42,7 @@ def readPassage(reference):
 			else:
 				while verse <= ref[0][4]:
 					passage+=bible[ref[0][0]][str(chapter)][str(verse)]
+					passage+=' '
 					verse+=1
 			chapter+=1
 			verse = 1
