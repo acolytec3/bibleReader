@@ -29,6 +29,7 @@ def readPassage(reference):
 	print(ref)
 	passage = ''
 	if ref != []:
+		print(ref)
 		verse = ref[0][2]
 		for chapter in range(ref[0][1],ref[0][3]+1):
 			if chapter < ref[0][3]:
@@ -54,13 +55,19 @@ def readPassage_callback(hermes, intentMessage):
 	book = intentMessage.slots.book[0].slot_value.value.value
 	chapter = intentMessage.slots.chapter[0].slot_value.value.value
 	verse = intentMessage.slots.verse[0].slot_value.value.value
+	second_chapter = intentMessage.slots.second_chapter[0].slot_value.value.value
+	second_verse = intentMessage.slots.second_verse[0].slot_value.value.value
 	reference = book + ' ' + str(int(chapter))
 	if type(verse)==float:
 		reference+=":" + str(int(verse))
+	if type(second_chapter) ==  float:
+		reference+="-" + str(int(second_chapter)) + ":"
+	if type(second_verse)==float:
+		reference+=str(int(second_verse))
 	print(reference)
 	message = readPassage(reference)
 	hermes.publish_end_session(intentMessage.session_id, message)
 
 if __name__=="__main__":
-	with Hermes("localhost:1883") as h:
+	with Hermes("192.168.1.16:1883") as h:
 		h.subscribe_intent("konjou:readPassage",readPassage_callback).start()
