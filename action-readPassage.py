@@ -53,17 +53,37 @@ def readPassage(reference):
 
 def readPassage_callback(hermes, intentMessage):
 	book = intentMessage.slots.book[0].slot_value.value.value
-	chapter = intentMessage.slots.chapter[0].slot_value.value.value
-	verse = intentMessage.slots.verse[0].slot_value.value.value
-	second_chapter = intentMessage.slots.second_chapter[0].slot_value.value.value
-	second_verse = intentMessage.slots.second_verse[0].slot_value.value.value
+	if book in ('Jude, 3 John, Philemon'):
+		verse = intentMessage.slots.chapter[0].slot_value.value.value
+		chapter = 1.0
+		second_chapter = 1.0
+		try:
+			second_verse = intentMessage.slots.verse[0].slot_value.value.value
+		except:
+			second_verse = verse
+	else:
+		chapter = intentMessage.slots.chapter[0].slot_value.value.value
+		try:
+			verse = intentMessage.slots.verse[0].slot_value.value.value
+		except:
+			verse = ''
+		try:
+			second_chapter = intentMessage.slots.chapter[1].slot_value.value.value
+		except:
+			second_chapter = ''
+		try:
+			second_verse = intentMessage.slots.verse[1].slot_value.value.value
+		except:
+			second_verse = ''
 	reference = book + ' ' + str(int(chapter))
 	if type(verse)==float:
 		reference+=":" + str(int(verse))
 	if type(second_chapter) ==  float:
 		reference+="-" + str(int(second_chapter)) + ":"
 	if type(second_verse)==float:
-		reference+=str(int(second_verse))
+		if  type(second_chapter)!=float:
+			reference+="-"
+		reference+= str(int(second_verse))
 	print(reference)
 	message = readPassage(reference)
 	hermes.publish_end_session(intentMessage.session_id, message)
