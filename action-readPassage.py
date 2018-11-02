@@ -89,5 +89,5 @@ def readPassage_callback(hermes, intentMessage):
 	hermes.publish_end_session(intentMessage.session_id, message)
 
 if __name__=="__main__":
-	with Hermes("192.168.1.16:1883") as h:
+	with Hermes("localhost:1883") as h:
 		h.subscribe_intent("konjou:readPassage",readPassage_callback).start()
