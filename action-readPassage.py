@@ -53,7 +53,7 @@ def readPassage(reference):
 
 def readPassage_callback(hermes, intentMessage):
 	book = intentMessage.slots.book[0].slot_value.value.value
-	if book in ('Jude, 3 John, Philemon'):
+	if book in ('Jude', '3 John', 'Philemon'):
 		verse = intentMessage.slots.chapter[0].slot_value.value.value
 		chapter = 1.0
 		second_chapter = 1.0
